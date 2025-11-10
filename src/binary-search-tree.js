@@ -59,19 +59,57 @@ class BinarySearchTree {
     return this.find(data) !== null;
   }
 
-  remove(/* data */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  remove(data) {
+    this.treeRoot = this.removeNode(this.treeRoot, data);
+  }
+  
+  removeNode(node, data) {
+    if (!node) return null;
+
+    if (data < node.data) {
+      node.left = this.removeNode(node.left, data);
+      return node;
+    } else if (data > node.data) {
+      node.right = this.removeNode(node.right, data);
+      return node;
+    } else {
+      if (!node.left && !node.right) return null; // If the node is a list, just delete it
+      if (!node.left) return node.right; // If has only a right child, replace the node with it
+      if (!node.right) return node.left; // The same with right
+
+      // If the node has two children, look for the min on the right branch
+      let minRight = node.right;
+      while (minRight.left) {
+        minRight = minRight.left;
+      }
+      node.data = minRight.data; // place it's value instead of the node
+      this.removeNode(node.right, minRight.data);
+      return node;
+    }
   }
 
   min() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    let current = this.treeRoot;
+    while (current) {
+      if (!current.left) {
+        return current.data;
+      } else {
+        current = current.left;
+      }
+    }
+    return null;
   }
 
   max() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    let current = this.treeRoot;
+    while (current) {
+      if (!current.right) {
+        return current.data;
+      } else {
+        current = current.right;
+      }
+    }
+    return null;
   }
 }
 
