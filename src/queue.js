@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../lib/errors');
+/* const { NotImplementedError } = require('../lib/errors'); */
 const { ListNode } = require('../extensions/list-node.js');
 
 /**
@@ -22,14 +22,25 @@ class Queue {
     return this.first;
   }
 
-  enqueue(/* value */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  enqueue(value) {
+    const newNode = { value, next: null };
+    if (!this.first) {
+      this.first = newNode;
+      this.last = newNode;
+    } else {
+      this.last.next = newNode;
+      this.last = newNode;
+    }
   }
 
   dequeue() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    if (this.first) {
+      const toDelete = this.first.value;
+      this.first = this.first.next;
+      return toDelete;
+    } else {
+      return undefined;
+    }
   }
 }
 
